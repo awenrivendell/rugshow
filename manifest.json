@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Arwen's Rug Show Extension",
   "description": "Shows Hosky CG NFT's Rug Pools",
-  "version": "1.0",
+  "version": "beta",
   "icons": {
     "16": "assets/images/btg-16.png",
     "32": "assets/images/btg-32.png",

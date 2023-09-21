@@ -1,8 +1,8 @@
 const HOSKY_BASE_URL = 'https://www.jpg.store/collection/hoskycashgrab?tab=items';
 
 const NFT_CONTAINER = 'div.NFTMarketplaceCard_nftMarketplaceCardContainer__QWSCT';
-const LUT = ['HAZEL', 'SALT', 'PSYA', 'PRIDE', 'ASPEN', 'DDOS', 'A3C', 'BAIDU', 'WOOF', 'LIDO', 'BONE', 'VEGAS', 'QCPOL', 'CHEF', 'PSB', 'RARE', 'FARM', 'STOIC', 'ITZA']
-const ALL = 524287;
+const LUT = ['HAZEL', 'SALT', 'PSYA', 'PRIDE', 'ASPEN', 'DDOS', 'A3C', 'BAIDU', 'WOOF', 'LIDO', 'BONE', 'VEGAS', 'QCPOL', 'CHEF', 'PSB', 'RARE', 'FARM', 'STOIC', 'ITZA', 'SEA']
+const ALL = 1048575;
 
 const command = {
     update: "update",
@@ -16,7 +16,7 @@ function injectPools(cg, selected) {
     if (id < CG_POOL_MAP.length) {
         encoded = CG_POOL_MAP[id-1] & selected;
         if (encoded) {           
-            for (var count = 0, i = 1; count < 19; count++, i <<= 1) {
+            for (var count = 0, i = 1; count < LUT.length; count++, i <<= 1) {
                 if (encoded & i) pools.push(LUT[count]);
             }
         } 
