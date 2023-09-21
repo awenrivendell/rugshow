@@ -1,4 +1,5 @@
 Arwen's Rug Show Extension
+
 A Chrome Extension Plugin to show Hosky Cash Grab NFT's matching Rug Pools on JPG Store
 
 How To Install:
