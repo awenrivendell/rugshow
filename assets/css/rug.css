@@ -1,0 +1,11 @@
+div.matched {
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+    border: 2px solid #dadada;
+    border-radius: 7px;
+    outline: none;
+}
+
+div.unmatched {
+    opacity: 0.3;
+}

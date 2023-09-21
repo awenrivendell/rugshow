@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Arwen's Rug Show Extension",
+  "description": "Shows Hosky CG NFT's Rug Pools",
+  "version": "1.0",
+  "icons": {
+    "16": "assets/images/btg-16.png",
+    "32": "assets/images/btg-32.png",
+    "48": "assets/images/btg-48.png",
+    "128": "assets/images/btg-128.png"
+  },
+  "action": {
+    "default_popup": "rugpool.html",
+    "default_icon": "assets/images/btg-16.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.jpg.store/collection/hoskycashgrab?tab=items*"],
+      "css": ["assets/css/rug.css"],
+      "js": ["scripts/compressed.js", "scripts/pool-lib.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "scripts/background.js",
+    "matches": ["https://www.jpg.store/collection/hoskycashgrab?tab=items*"]
+  },
+  "permissions": ["scripting", "alarms", "storage"]
+}
