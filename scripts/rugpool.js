@@ -28,7 +28,15 @@ function loadPools() {
         }
         toggleAll.innerHTML = poolsSelected == ALL ? "Uncheck All" : "Check All";
     });
-}
+    chrome.storage.session.get(["lightmode"]).then((result) => {
+        lightSwitch.checked = result.lightmode;
+        if (result.lightmode) {
+            document.body.classList.remove("dark");
+        } else {
+            document.body.classList.add("dark");
+        }
+    });
+} 
 
 pools.forEach(function(checkbox) {
     checkbox.addEventListener('change', function() {
@@ -37,7 +45,9 @@ pools.forEach(function(checkbox) {
 });
 
 lightSwitch.addEventListener("click", () => {
-    document.body.classList.toggle("dark"); 
+    document.body.classList.toggle("dark");
+    console.log(lightSwitch.checked);
+    chrome.storage.session.set({ "lightmode": lightSwitch.checked });
 });
 
 toggleAll.addEventListener("click", () => {
