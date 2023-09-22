@@ -128,3 +128,15 @@ input[type="checkbox"].toggle:disabled+label::before {
 input[type="checkbox"].toggle:disabled+label::after {
   background-color: #777;
 }
+
+input[type="checkbox"].toggletheme:checked {
+  content: "\263C";
+  transform: translateX(100%);
+  background-color: hsl(100, 70%, 60%);
+}
+
+input[type="checkbox"].toggletheme {
+  content: "\263E";
+  transform: translateX(100%);
+  background-color: hsl(100, 70%, 60%);
+}

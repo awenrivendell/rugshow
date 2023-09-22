@@ -21,7 +21,7 @@ function updatePools() {
 function loadPools() {
     chrome.storage.session.get(["pools"]).then((result) => {
         poolsSelected = result.pools == undefined ? ALL :  result.pools;
-        for (var count = 0, i = 1; count < 19; count++, i <<= 1) {
+        for (var count = 0, i = 1; count < LUT.length; count++, i <<= 1) {
             selected = (poolsSelected & i) != 0;
             document.querySelector('#' + LUT[count]).checked = selected;
         }
