@@ -8,15 +8,39 @@ html {
   width: 330px;
 }
 
-.footer {
+div.title {
+  font-size: 1.5em;
+  padding-left: 0.3em;
+  padding-bottom: 0.3em;
+}
+
+div.description {
+  font-size: 1em;
+  padding-left: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+div.footer {
+  font-size: 0.9em;
   left: 0;
   bottom: 0;
-  padding: 1.5em;
+  padding: 1em;
   margin: 0;
 }
 
 body {
-  width: 20rem;
+  background-color: #fff;
+  color: black;
+  transition: background 0.2s linear;
+}
+
+body.dark {
+  background-color: #292c35;
+  color: #fff;
+}
+
+body.dark h1, body.dark .support a {
+  color: #fff;
 }
 
 h3,
@@ -48,7 +72,6 @@ p {
 
 button {
   background-color: #206cd2;
-  /* Green */
   border: none;
   padding: 0.5em;
   color: white;
@@ -58,7 +81,6 @@ button {
   border-radius: 0.3em;
   margin: 0.3em;
 }
-
 
 input[type="checkbox"].toggle {
   opacity: 0;
@@ -129,14 +151,50 @@ input[type="checkbox"].toggle:disabled+label::after {
   background-color: #777;
 }
 
-input[type="checkbox"].toggletheme:checked {
-  content: "\263C";
-  transform: translateX(100%);
-  background-color: hsl(100, 70%, 60%);
+
+input[type="checkbox"].lightswitch {
+  opacity: 0;
+  position: absolute;
+  left: -9000px;
+  top: -9000px;
 }
 
-input[type="checkbox"].toggletheme {
+input[type="checkbox"].lightswitch {
   content: "\263E";
   transform: translateX(100%);
   background-color: hsl(100, 70%, 60%);
 }
+
+div.lightswitch {
+  position: absolute;
+  right: 30vw;
+  top: 4vw;
+}
+
+ input[type="checkbox"].lightswitch+label::before {
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  content: "\1F319";
+  padding: 0px 2px 3px 2px;
+  left: 50px;
+  width: 10vw;
+  height: 10vw;
+  background-color: hsl(0, 0%, 35%);
+  color: black;
+  border-radius: 10vw;
+  transition: background-color 200ms ease-in-out, transform 200ms ease-in-out;
+}
+
+input[type="checkbox"].lightswitch:checked+label::before {
+  font-size: 2.3em;
+  display: flex;
+  position: absolute;
+  content: "\2600";
+  background-color: hsl(0, 0%, 25%);
+  color: rgb(255, 208, 0);
+  transition: background-color 200ms ease-in-out, transform 200ms ease-in-out;
+}
+

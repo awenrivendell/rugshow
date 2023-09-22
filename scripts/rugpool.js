@@ -1,5 +1,6 @@
 const pools = document.querySelectorAll('input[type=checkbox].pool');
 const toggleAll = document.querySelector("#toggleAll");
+const lightSwitch = document.querySelector("input[type=checkbox].lightswitch");
 
 const save = document.querySelector("#save");
 
@@ -33,6 +34,10 @@ pools.forEach(function(checkbox) {
     checkbox.addEventListener('change', function() {
         updatePools();
     })
+});
+
+lightSwitch.addEventListener("click", () => {
+    document.body.classList.toggle("dark"); 
 });
 
 toggleAll.addEventListener("click", () => {
