@@ -9,3 +9,17 @@ div.matched {
 div.unmatched {
     opacity: 0.3;
 }
+
+.pooltext {
+    padding: 0.3em;
+    font-size: 0.9em;
+    color: black;
+    background-color: #ffdb24;
+    border-radius: 0.3em;
+}
+
+.nopooltext {
+    padding: 0.3em;
+    font-size: 0.9em;
+    color: rgb(63, 62, 62);
+}

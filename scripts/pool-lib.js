@@ -1,6 +1,14 @@
 const HOSKY_BASE_URL = 'https://www.jpg.store/collection/hoskycashgrab?tab=items';
 
+const SWEEP_BUTTON_ENABLED = '.border-text-link';
+
 const NFT_CONTAINER = 'div.NFTMarketplaceCard_nftMarketplaceCardContainer__QWSCT';
+const SWEEP_CONTAINER = 'div.transition-all';
+const POOL_CONTAINER_CLASS = "matchedPools";
+
+const COLLECTION_ELEMENT = "#asset-title:not(.rugged)";
+const SWEEP_ELEMENT = ".flex .flex-col .items-start > span:first-child:not(.rugged)";
+
 const LUT = ['HAZEL', 'SALT', 'PSYA', 'PRIDE', 'ASPEN', 'DDOS', 'A3C', 'BAIDU', 'WOOF', 'LIDO', 'BONE', 'VEGAS', 'QCPOL', 'CHEF', 'PSB', 'RARE', 'FARM', 'STOIC', 'ITZA', 'SEA']
 const ALL = 1048575;
 
@@ -10,6 +18,7 @@ const command = {
 }
 
 function injectPools(cg, selected) {
+    isSweep = isSweepEnabled();
     var asset = cg.textContent;
     id = parseInt(asset.slice(21 - asset.length));
     pools = [];
@@ -21,28 +30,36 @@ function injectPools(cg, selected) {
             }
         } 
     }
-    div = document.createElement("div");
-    div.innerHTML = (pools.length > 0 ? pools.length + ": " + pools.join(", ") : "No Matching Pools");
-    div.classList.add("styles_subdued__ySQNo");
-    div.classList.add("matchedPools");
-    insertAfter(cg, div);
-
-    parentDiv = cg.closest(NFT_CONTAINER);
-    if (selected != ALL) {
-        if (pools.length > 0) {
-            parentDiv.classList.add("matched");
-        } else {
-            parentDiv.classList.add("unmatched");
-        }
+    newElement = document.createElement(isSweep ? "span" : "div");
+    newElement.classList.add("matchedPools");
+    if (pools.length > 0) {
+        newElement.innerHTML = pools.join(", ");
+        newElement.classList.add("pooltext");
     } else {
-        parentDiv.classList.remove("matched", "unmatched");
+        newElement.innerHTML = "No Matching Pools";
+        newElement.classList.add("nopooltext");
+    }
+    
+    insertAfter(cg, newElement);
+
+    if (!isSweep) {
+        parentDiv = cg.closest(NFT_CONTAINER);
+        if (selected != ALL) {
+            if (pools.length > 0) {
+                parentDiv.classList.add("matched");
+            } else {
+                parentDiv.classList.add("unmatched");
+            }
+        } else {
+            parentDiv.classList.remove("matched", "unmatched");
+        }
     }
 
     cg.classList.add("rugged");
 }
 
 function clearAll() {
-    document.querySelectorAll(NFT_CONTAINER).forEach(e => e.classList.remove("matched", "unmatched"));
+    document.querySelectorAll(NFT_CONTAINER, SWEEP_CONTAINER).forEach(e => e.classList.remove("matched", "unmatched"));
     document.querySelectorAll(".rugged").forEach(e => e.classList.remove("rugged"));
     document.querySelectorAll(".matchedPools").forEach(e => e.remove());
 }
@@ -51,8 +68,14 @@ function insertAfter(referenceNode, newNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
+function isSweepEnabled() {
+    sweep = document.querySelector(SWEEP_BUTTON_ENABLED);
+    return sweep != null; 
+}
+
 function update(selected) {
-    document.querySelectorAll("#asset-title:not(.rugged)").forEach(cg => {
+    elementContainer = document.querySelectorAll(isSweepEnabled() ? SWEEP_ELEMENT : COLLECTION_ELEMENT);
+    elementContainer.forEach(cg => {
         injectPools(cg, selected);
     });
 }

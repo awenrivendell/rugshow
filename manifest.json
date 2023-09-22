@@ -15,7 +15,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.jpg.store/collection/hoskycashgrab?tab=items*"],
+      "matches": ["https://www.jpg.store/collection/hoskycashgrab*"],
       "css": ["assets/css/rug.css"],
       "js": ["scripts/compressed.js", "scripts/pool-lib.js"],
       "run_at": "document_idle"
@@ -23,7 +23,7 @@
   ],
   "background": {
     "service_worker": "scripts/background.js",
-    "matches": ["https://www.jpg.store/collection/hoskycashgrab?tab=items*"]
+    "matches": ["https://www.jpg.store/collection/hoskycashgrab*"]
   },
   "permissions": ["scripting", "alarms", "storage"]
 }
