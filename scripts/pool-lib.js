@@ -1,16 +1,16 @@
-const HOSKY_BASE_URL = 'https://www.jpg.store/collection/hoskycashgrab?tab=items';
+const HOSKY_BASE_URL = "https://www.jpg.store/collection/hoskycashgrab?tab=items";
 
-const STATIC_ASSET_NAME_LENGTH = 'HOSKY C(ash Grab)NFT '.length;
-const SWEEP_BUTTON_ENABLED = '.border-text-link';
+const STATIC_ASSET_NAME_LENGTH = "HOSKY C(ash Grab)NFT ".length;
+const SWEEP_BUTTON_ENABLED = ".border-text-link";
 
-const NFT_CONTAINER = 'div.NFTMarketplaceCard_nftMarketplaceCardContainer__QWSCT';
-const SWEEP_CONTAINER = 'div.transition-all';
+const NFT_CONTAINER = "div.NFTMarketplaceCard_nftMarketplaceCardContainer__QWSCT";
+const SWEEP_CONTAINER = "div.transition-all";
 const POOL_CONTAINER_CLASS = "matchedPools";
 
 const COLLECTION_ELEMENT = "#asset-title:not(.rugged)";
 const SWEEP_ELEMENT = ".flex .flex-col .items-start > span:first-child:not(.rugged)";
 
-const LUT = ['HAZEL', 'SALT', 'PSYA', 'PRIDE', 'ASPEN', 'DDOS', 'A3C', 'BAIDU', 'WOOF', 'LIDO', 'BONE', 'VEGAS', 'QCPOL', 'CHEF', 'PSB', 'RARE', 'FARM', 'STOIC', 'ITZA', 'SEA']
+const LUT = ["HAZEL", "SALT", "PSYA", "PRIDE", "ASPEN", "DDOS", "A3C", "BAIDU", "WOOF", "LIDO", "BONE", "VEGAS", "QCPOL", "CHEF", "PSB", "RARE", "FARM", "STOIC", "ITZA", "SEA"]
 const ALL = 1048575;
 
 const command = {
