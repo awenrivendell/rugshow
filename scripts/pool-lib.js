@@ -4,6 +4,7 @@ const STATIC_CG_ASSET_NAME = "HOSKY C(ash Grab)NFT ";
 const STATIC_ASSET_NAME_LENGTH = STATIC_CG_ASSET_NAME.length;
 const SWEEP_BUTTON_ENABLED = ".border-text-link";
 const PROFILE_PAGE_INDICATOR = "div.styles_dualImageContainer__YPhDJ.rounded-full.h-full.w-full.overflow-hidden.rounded-full.object-contain";
+const PROFILE_PAGE_INDICATOR2 = "div.relative.border-none.h-full.w-full.overflow-hidden.rounded-full.object-contain";
 
 const NFT_CONTAINER = "div.NFTMarketplaceCard_nftMarketplaceCardContainer__QWSCT";
 const PROFILE_CONTAINER = "div#asset-wallet-card";
@@ -90,7 +91,7 @@ function isSweepEnabled() {
 }
 
 function isProfilePage() {
-    return document.querySelector(PROFILE_PAGE_INDICATOR) != null;
+    return (document.querySelector(PROFILE_PAGE_INDICATOR) != null) | (document.querySelector(PROFILE_PAGE_INDICATOR2) != null);
 }
 
 function update(selected) {
