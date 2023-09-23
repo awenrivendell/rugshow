@@ -31,10 +31,10 @@ function injectPools(cg, selected) {
             }
         } 
     }
-    newElement = document.createElement(isSweep ? "span" : "div");
+    newElement = document.createElement("div");
     newElement.classList.add("matchedPools");
     if (pools.length > 0) {
-        newElement.innerHTML = pools.join(", ");
+        newElement.innerHTML = pools.length + ": " + pools.join(", ");
         newElement.classList.add("pooltext");
     } else {
         newElement.innerHTML = "No Matching Pools";
