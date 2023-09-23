@@ -18,43 +18,43 @@ const command = {
     clear: "clear"
 }
 
-function appendPoolInfo(container, text, style) {
-    element = document.createElement("div");
+function wrapPoolInfo(text, style) {
+    var element = document.createElement("div");
     element.innerHTML = text;
     element.classList.add("pool-info", style);
-    container.appendChild(element);
+    return element;
 }
 
 function injectPools(cg, selected) {
-    isSweep = isSweepEnabled();
     var asset = cg.textContent;
     id = parseInt(asset.slice(STATIC_ASSET_NAME_LENGTH - asset.length));
-    pools = [];
-    if (id < CG_POOL_MAP.length) {
-        encoded = CG_POOL_MAP[id] & selected;
-        if (encoded) {           
-            for (var count = 0, i = 1; count < LUT.length; count++, i <<= 1) {
-                if (encoded & i) pools.push(LUT[count]);
-            }
-        } 
-    }
+    matched = 0;
     poolListContainer = document.createElement("div");
     poolListContainer.classList.add("pools-container");
-    if (pools.length > 0) {
-        appendPoolInfo(poolListContainer, pools.length + ": ", "normaltext");        
-        pools.forEach(pool => {
-            appendPoolInfo(poolListContainer, pool, "selectedpool");
-        })
-    } else {
-        appendPoolInfo(poolListContainer, "No Matching Pools", "nopools");
-    }
-    
+    if (id < CG_POOL_MAP.length) {
+        encoded = CG_POOL_MAP[id];
+        for (var count = 0, i = 1; count < LUT.length; count++, i <<= 1) {
+            if (encoded & i) {
+                poolListContainer.appendChild(wrapPoolInfo(LUT[count], (selected & i) ? "selectedpool" : "normaltext"));
+                matched++;
+            }
+        }
+        if (matched > 0) {
+            poolListContainer.insertBefore(wrapPoolInfo(matched + ":&nbsp;", "normaltext"), poolListContainer.firstChild);
+        } else {
+            poolListContainer.appendChild(wrapPoolInfo("No Matching Pools", "nopools"));
+        }
+    }    
     insertAfter(cg, poolListContainer);
+    highlightContainer(cg, selected);
+    cg.classList.add("rugged");
+}
 
-    if (!isSweep) {
+function highlightContainer(cg, selected) {
+    if (!isSweepEnabled()) {
         parentDiv = cg.closest(NFT_CONTAINER);
         if (selected != ALL) {
-            if (pools.length > 0) {
+            if (matched > 0) {
                 parentDiv.classList.add("matched");
             } else {
                 parentDiv.classList.add("unmatched");
@@ -63,8 +63,6 @@ function injectPools(cg, selected) {
             parentDiv.classList.remove("matched", "unmatched");
         }
     }
-
-    cg.classList.add("rugged");
 }
 
 function clearAll() {
