@@ -10,16 +10,29 @@ div.unmatched {
     opacity: 0.3;
 }
 
-.pooltext {
-    padding: 0.3em;
+div.pools-container {
     font-size: 0.9em;
-    color: black;
-    background-color: #ffdb24;
+    width: auto;
+    text-align: left;
+}
+
+.pool-info {
+    display: inline-block;
+    padding: 0.3em;
+    margin: 0.3em;
     border-radius: 0.3em;
 }
 
-.nopooltext {
-    padding: 0.3em;
-    font-size: 0.9em;
-    color: rgb(63, 62, 62);
+.selectedpool {
+    color: black;
+    background-color: #ffdb24;
+    border-color: black;
+}
+
+.normaltext {
+    color: hsla(0, 0%, 100%, 0.85);
+}
+
+.nopools {
+    color: hsla(0, 0%, 100%, 0.60);
 }

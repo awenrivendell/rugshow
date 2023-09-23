@@ -5,7 +5,7 @@ const SWEEP_BUTTON_ENABLED = ".border-text-link";
 
 const NFT_CONTAINER = "div.NFTMarketplaceCard_nftMarketplaceCardContainer__QWSCT";
 const SWEEP_CONTAINER = "div.transition-all";
-const POOL_CONTAINER_CLASS = "matchedPools";
+const POOL_CONTAINER_CLASS = "pools-container";
 
 const COLLECTION_ELEMENT = "#asset-title:not(.rugged)";
 const SWEEP_ELEMENT = ".flex .flex-col .items-start > span:first-child:not(.rugged)";
@@ -16,6 +16,13 @@ const ALL = 1048575;
 const command = {
     update: "update",
     clear: "clear"
+}
+
+function appendPoolInfo(container, text, style) {
+    element = document.createElement("div");
+    element.innerHTML = text;
+    element.classList.add("pool-info", style);
+    container.appendChild(element);
 }
 
 function injectPools(cg, selected) {
@@ -31,17 +38,18 @@ function injectPools(cg, selected) {
             }
         } 
     }
-    newElement = document.createElement("div");
-    newElement.classList.add("matchedPools");
+    poolListContainer = document.createElement("div");
+    poolListContainer.classList.add("pools-container");
     if (pools.length > 0) {
-        newElement.innerHTML = pools.length + ": " + pools.join(", ");
-        newElement.classList.add("pooltext");
+        appendPoolInfo(poolListContainer, pools.length + ": ", "normaltext");        
+        pools.forEach(pool => {
+            appendPoolInfo(poolListContainer, pool, "selectedpool");
+        })
     } else {
-        newElement.innerHTML = "No Matching Pools";
-        newElement.classList.add("nopooltext");
+        appendPoolInfo(poolListContainer, "No Matching Pools", "nopools");
     }
     
-    insertAfter(cg, newElement);
+    insertAfter(cg, poolListContainer);
 
     if (!isSweep) {
         parentDiv = cg.closest(NFT_CONTAINER);
@@ -62,7 +70,7 @@ function injectPools(cg, selected) {
 function clearAll() {
     document.querySelectorAll(NFT_CONTAINER, SWEEP_CONTAINER).forEach(e => e.classList.remove("matched", "unmatched"));
     document.querySelectorAll(".rugged").forEach(e => e.classList.remove("rugged"));
-    document.querySelectorAll(".matchedPools").forEach(e => e.remove());
+    document.querySelectorAll(".pools-container").forEach(e => e.remove());
 }
 
 function insertAfter(referenceNode, newNode) {
