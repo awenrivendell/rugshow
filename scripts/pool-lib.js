@@ -28,6 +28,7 @@ function wrapPoolInfo(text, style) {
 function injectPools(cg, selected) {
     var asset = cg.textContent;
     id = parseInt(asset.slice(STATIC_ASSET_NAME_LENGTH - asset.length));
+    pools = 0;
     matched = 0;
     poolListContainer = document.createElement("div");
     poolListContainer.classList.add("pools-container");
@@ -36,11 +37,14 @@ function injectPools(cg, selected) {
         for (var count = 0, i = 1; count < LUT.length; count++, i <<= 1) {
             if (encoded & i) {
                 poolListContainer.appendChild(wrapPoolInfo(LUT[count], (selected & i) ? "selectedpool" : "normaltext"));
-                matched++;
+                if (selected & i) {
+                    matched++;
+                }
+                pools++;
             }
         }
-        if (matched > 0) {
-            poolListContainer.insertBefore(wrapPoolInfo(matched + ":&nbsp;", "normaltext"), poolListContainer.firstChild);
+        if (pools > 0) {
+            poolListContainer.insertBefore(wrapPoolInfo(pools + ":", "normaltext"), poolListContainer.firstChild);
         } else {
             poolListContainer.appendChild(wrapPoolInfo("No Matching Pools", "nopools"));
         }
