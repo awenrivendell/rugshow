@@ -27,10 +27,10 @@ function wrapPoolInfo(text, style) {
 
 function injectPools(cg, selected) {
     var asset = cg.textContent;
-    id = parseInt(asset.slice(STATIC_ASSET_NAME_LENGTH - asset.length));
-    pools = 0;
-    matched = 0;
-    poolListContainer = document.createElement("div");
+    var id = parseInt(asset.slice(STATIC_ASSET_NAME_LENGTH - asset.length));
+    var pools = 0;
+    var matched = 0;
+    var poolListContainer = document.createElement("div");
     poolListContainer.classList.add("pools-container");
     if (id < CG_POOL_MAP.length) {
         encoded = CG_POOL_MAP[id];
@@ -50,11 +50,11 @@ function injectPools(cg, selected) {
         }
     }    
     insertAfter(cg, poolListContainer);
-    highlightContainer(cg, selected);
+    highlightContainer(cg, selected, matched);
     cg.classList.add("rugged");
 }
 
-function highlightContainer(cg, selected) {
+function highlightContainer(cg, selected, matched) {
     if (!isSweepEnabled()) {
         parentDiv = cg.closest(NFT_CONTAINER);
         if (selected != ALL) {
@@ -80,12 +80,11 @@ function insertAfter(referenceNode, newNode) {
 }
 
 function isSweepEnabled() {
-    sweep = document.querySelector(SWEEP_BUTTON_ENABLED);
-    return sweep != null; 
+    return document.querySelector(SWEEP_BUTTON_ENABLED) != null; 
 }
 
 function update(selected) {
-    elementContainer = document.querySelectorAll(isSweepEnabled() ? SWEEP_ELEMENT : COLLECTION_ELEMENT);
+    var elementContainer = document.querySelectorAll(isSweepEnabled() ? SWEEP_ELEMENT : COLLECTION_ELEMENT);
     elementContainer.forEach(cg => {
         injectPools(cg, selected);
     });

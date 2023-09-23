@@ -7,7 +7,6 @@ const command = {
 }
 
 var hoskyPort;
-
 var poolsSelected = ALL;
 
 chrome.runtime.onConnect.addListener(function(port) {

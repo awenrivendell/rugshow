@@ -12,7 +12,7 @@ poolsSelected = ALL;
 
 function updatePools() {
     poolsSelected = Array.from(document.querySelectorAll("input[type=checkbox].pool:checked")).map(x => x.value);
-    encoded = 0;
+    var encoded = 0;
     for (let pool of poolsSelected) {            
         encoded = encoded | POOLBIT[pool];
     }
