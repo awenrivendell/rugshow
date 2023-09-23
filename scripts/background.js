@@ -7,7 +7,6 @@ const command = {
 }
 
 var hoskyPort;
-var hoskyAlarm;
 
 var poolsSelected = ALL;
 
@@ -46,7 +45,6 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
     for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
-        console.log(key);
         if (key == 'pools') {
             poolsSelected = newValue;
             hoskyPort?.postMessage({command: command.clear, pools: poolsSelected});

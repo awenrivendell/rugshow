@@ -1,5 +1,6 @@
 const HOSKY_BASE_URL = 'https://www.jpg.store/collection/hoskycashgrab?tab=items';
 
+const STATIC_ASSET_NAME_LENGTH = 'HOSKY C(ash Grab)NFT '.length;
 const SWEEP_BUTTON_ENABLED = '.border-text-link';
 
 const NFT_CONTAINER = 'div.NFTMarketplaceCard_nftMarketplaceCardContainer__QWSCT';
@@ -20,10 +21,10 @@ const command = {
 function injectPools(cg, selected) {
     isSweep = isSweepEnabled();
     var asset = cg.textContent;
-    id = parseInt(asset.slice(21 - asset.length));
+    id = parseInt(asset.slice(STATIC_ASSET_NAME_LENGTH - asset.length));
     pools = [];
     if (id < CG_POOL_MAP.length) {
-        encoded = CG_POOL_MAP[id-1] & selected;
+        encoded = CG_POOL_MAP[id] & selected;
         if (encoded) {           
             for (var count = 0, i = 1; count < LUT.length; count++, i <<= 1) {
                 if (encoded & i) pools.push(LUT[count]);
