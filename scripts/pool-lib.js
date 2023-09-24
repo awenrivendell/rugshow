@@ -2,19 +2,10 @@ const HOSKY_BASE_URL = "https://www.jpg.store/collection/hoskycashgrab?tab=items
 
 const STATIC_CG_ASSET_NAME = "HOSKY C(ash Grab)NFT ";
 const STATIC_ASSET_NAME_LENGTH = STATIC_CG_ASSET_NAME.length;
-const SWEEP_BUTTON_ENABLED = ".border-text-link";
-const PROFILE_PAGE_INDICATOR = "div.styles_dualImageContainer__YPhDJ.rounded-full.h-full.w-full.overflow-hidden.rounded-full.object-contain";
-const PROFILE_PAGE_INDICATOR2 = "div.relative.border-none.h-full.w-full.overflow-hidden.rounded-full.object-contain";
 
-const NFT_CONTAINER = "div.NFTMarketplaceCard_nftMarketplaceCardContainer__QWSCT";
-const PROFILE_CONTAINER = "div#asset-wallet-card";
-const SWEEP_CONTAINER = "div.transition-all";
-
+const NFT_ASSET_NAME_ELEMENT = "h4#asset-title:not(.rugged), div.flex .flex-col .items-start > span:first-child:not(.rugged), div.bodyMd-400:not(.rugged)"
+const PARENT_CONTAINER = "div.NFTMarketplaceCard_nftMarketplaceCardContainer__QWSCT, div#asset-wallet-card";
 const POOL_CONTAINER_CLASS = "pools-container";
-
-const COLLECTION_ELEMENT = "#asset-title:not(.rugged)";
-const SWEEP_ELEMENT = ".flex .flex-col .items-start > span:first-child:not(.rugged)";
-const PROFILE_ELEMENT = "div.bodyMd-400:not(.rugged)";
 
 const LUT = ["HAZEL", "SALT", "PSYA", "PRIDE", "ASPEN", "DDOS", "A3C", "BAIDU", "WOOF", "LIDO", "BONE", "VEGAS", "QCPOL", "CHEF", "PSB", "RARE", "FARM", "STOIC", "ITZA", "SEA"]
 const ALL = 1048575;
@@ -49,35 +40,27 @@ function injectPools(cg, selected) {
                 pools++;
             }
         }
-        if (pools > 0) {
-            poolListContainer.insertBefore(wrapPoolInfo(pools + ":", "normaltext"), poolListContainer.firstChild);
-        } else {
-            poolListContainer.appendChild(wrapPoolInfo("No Matching Pools", "nopools"));
-        }
+        poolListContainer.prepend(wrapPoolInfo(pools > 0 ? pools + ":" : "No Matching Pools", pools > 0 ? "normaltext" : "nopools"));
     }    
     insertAfter(cg, poolListContainer);
-    highlightContainer(cg, selected, matched);
-    cg.classList.add("rugged");
+    if (selected != ALL) {
+        highlightContainer(cg, selected, matched);
+    }
 }
 
 function highlightContainer(cg, selected, matched) {
-    var parentDiv = isProfilePage() ? cg.closest(PROFILE_CONTAINER) : !isSweepEnabled() ? cg.closest(NFT_CONTAINER) : null;
-    if (parentDiv != null) {
-        if (selected != ALL) {
-            if (matched > 0) {
-                parentDiv.classList.add("matched");
-            } else {
-                parentDiv.classList.add("unmatched");
-            }
+    var parentContainer = cg.closest(PARENT_CONTAINER);
+    if (parentContainer != null) {
+        if (matched > 0) {
+            parentContainer.classList.add("matched");
         } else {
-            parentDiv.classList.remove("matched", "unmatched");
+            parentContainer.classList.add("unmatched");
         }
     }
 }
 
 function clearAll() {
-    document.querySelectorAll(PROFILE_CONTAINER).forEach(e => e.classList.remove("matched", "unmatched"));
-    document.querySelectorAll(NFT_CONTAINER).forEach(e => e.classList.remove("matched", "unmatched"));
+    document.querySelectorAll(PARENT_CONTAINER).forEach(e => e.classList.remove("matched", "unmatched"));
     document.querySelectorAll(".rugged").forEach(e => e.classList.remove("rugged"));
     document.querySelectorAll(".pools-container").forEach(e => e.remove());
 }
@@ -95,21 +78,12 @@ function isProfilePage() {
 }
 
 function update(selected) {
-    if (isProfilePage()) {
-        let elementContainer = document.querySelectorAll(PROFILE_ELEMENT);
-        elementContainer.forEach(nft => {
-            if (nft.textContent.startsWith(STATIC_CG_ASSET_NAME)) {
-                injectPools(nft, selected);
-            } else {
-                nft.classList.add("rugged");
-            }
-        });
-    } else {
-        let elementContainer = document.querySelectorAll(isSweepEnabled() ? SWEEP_ELEMENT : COLLECTION_ELEMENT);
-        elementContainer.forEach(cg => {
-            injectPools(cg, selected);
-        });    
-    }
+    document.querySelectorAll(NFT_ASSET_NAME_ELEMENT).forEach(nft => {
+        if (nft.textContent.startsWith(STATIC_CG_ASSET_NAME)) {
+            injectPools(nft, selected);
+        }
+        nft.classList.add("rugged");
+    });
 }
 
 var port = chrome.runtime.connect({name: "wenrug"});
