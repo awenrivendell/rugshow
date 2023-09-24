@@ -3,7 +3,7 @@ const HOSKY_BASE_URL = "https://www.jpg.store/collection/hoskycashgrab?tab=items
 const STATIC_CG_ASSET_NAME = "HOSKY C(ash Grab)NFT ";
 const STATIC_ASSET_NAME_LENGTH = STATIC_CG_ASSET_NAME.length;
 
-const NFT_ASSET_NAME_ELEMENT = "h4#asset-title:not(.rugged), div.flex .flex-col .items-start > span:first-child:not(.rugged), div.bodyMd-400:not(.rugged)"
+const NFT_ASSET_NAME_ELEMENT = "h4#asset-title:not(.rugged), div.flex .flex-col .items-start > span:first-child:not(.rugged), div.bodyMd-400:not(.rugged), h1.styles_H1__d38Bz>span:first-child:not(.rugged)";
 const PARENT_CONTAINER = "div.NFTMarketplaceCard_nftMarketplaceCardContainer__QWSCT, div#asset-wallet-card";
 const POOL_CONTAINER_CLASS = "pools-container";
 
