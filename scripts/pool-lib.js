@@ -1,7 +1,9 @@
 const HOSKY_BASE_URL = "https://www.jpg.store/collection/hoskycashgrab?tab=items";
 
-const STATIC_CG_ASSET_NAME = "HOSKY C(ash Grab)NFT ";
-const STATIC_ASSET_NAME_LENGTH = STATIC_CG_ASSET_NAME.length;
+const CG_ASSET_NAME = "HOSKY C(ash Grab)NFT ";
+const GNOMESKIE_ASSET_NAME = "Gnomeskies 69 Shades of Rug ";
+const CG_NAME_LENGTH = CG_ASSET_NAME.length;
+const GNOMESKIE_NAME_LENGTH = GNOMESKIE_ASSET_NAME.length;
 
 const NFT_ASSET_NAME_ELEMENT = "h4#asset-title:not(.rugged), div.flex .flex-col .items-start > span:first-child:not(.rugged), div.bodyMd-400:not(.rugged), h1.styles_H1__d38Bz>span:first-child:not(.rugged)";
 const PARENT_CONTAINER = "div.NFTMarketplaceCard_nftMarketplaceCardContainer__QWSCT, div#asset-wallet-card";
@@ -22,15 +24,16 @@ function wrapPoolInfo(text, style) {
     return element;
 }
 
-function injectPools(cg, selected) {
-    var asset = cg.textContent;
-    var id = parseInt(asset.slice(STATIC_ASSET_NAME_LENGTH - asset.length));
+function injectPools(nft, selected) {
+    var asset = nft.textContent;
+    var isHosky = asset.startsWith(CG_ASSET_NAME)
+    var id = parseInt(asset.slice((isHosky ? CG_NAME_LENGTH : GNOMESKIE_NAME_LENGTH) - asset.length));
     var pools = 0;
     var matched = 0;
     var poolListContainer = document.createElement("div");
     poolListContainer.classList.add("pools-container");
-    if (id < CG_POOL_MAP.length) {
-        encoded = CG_POOL_MAP[id];
+    if (id < (isHosky ? CG_POOL_MAP.length : GNOMESKIES_POOL_MAP.length)) {
+        encoded = (isHosky ? CG_POOL_MAP[id] : GNOMESKIES_POOL_MAP[id]);
         for (var count = 0, i = 1; count < LUT.length; count++, i <<= 1) {
             if (encoded & i) {
                 poolListContainer.appendChild(wrapPoolInfo(LUT[count], (selected & i) ? "selectedpool" : "normaltext"));
@@ -42,14 +45,14 @@ function injectPools(cg, selected) {
         }
         poolListContainer.prepend(wrapPoolInfo(pools > 0 ? pools + ":" : "No Matching Pools", pools > 0 ? "normaltext" : "nopools"));
     }    
-    insertAfter(cg, poolListContainer);
+    insertAfter(nft, poolListContainer);
     if (selected != ALL) {
-        highlightContainer(cg, selected, matched);
+        highlightContainer(nft, selected, matched);
     }
 }
 
-function highlightContainer(cg, selected, matched) {
-    var parentContainer = cg.closest(PARENT_CONTAINER);
+function highlightContainer(nft, selected, matched) {
+    var parentContainer = nft.closest(PARENT_CONTAINER);
     if (parentContainer != null) {
         if (matched > 0) {
             parentContainer.classList.add("matched");
@@ -79,7 +82,7 @@ function isProfilePage() {
 
 function update(selected) {
     document.querySelectorAll(NFT_ASSET_NAME_ELEMENT).forEach(nft => {
-        if (nft.textContent.startsWith(STATIC_CG_ASSET_NAME)) {
+        if (nft.textContent.startsWith(CG_ASSET_NAME) || nft.textContent.startsWith(GNOMESKIE_ASSET_NAME) ) {
             injectPools(nft, selected);
         }
         nft.classList.add("rugged");

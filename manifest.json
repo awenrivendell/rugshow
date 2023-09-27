@@ -17,7 +17,7 @@
     {
       "matches": ["https://www.jpg.store/*"],
       "css": ["assets/css/rug.css"],
-      "js": ["scripts/compressed.js", "scripts/pool-lib.js"],
+      "js": ["scripts/cg-compressed.js", "scripts/gnomeskies-compressed.js", "scripts/pool-lib.js"],
       "run_at": "document_idle"
     }
   ],

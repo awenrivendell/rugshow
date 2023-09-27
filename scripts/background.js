@@ -14,7 +14,7 @@ chrome.runtime.onConnect.addListener(function(port) {
         hoskyPort = port;
         console.log("connected");
         chrome.alarms.create("frequency", {
-            delayInMinutes: 0.05,
+            delayInMinutes: 0.1,
             periodInMinutes: 0.03
         });    
     }
