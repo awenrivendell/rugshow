@@ -25,5 +25,5 @@
     "service_worker": "scripts/background.js",
     "matches": ["https://www.jpg.store/*"]
   },
-  "permissions": ["scripting", "alarms", "storage", "activeTab"]
+  "permissions": ["scripting", "alarms", "storage", "tabs"]
 }

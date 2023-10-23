@@ -89,20 +89,14 @@ function update(selected) {
     });
 }
 
-var port = chrome.runtime.connect({name: "wenrug"});
-port.onMessage.addListener(function(msg) {
-    if (msg.command === command.update) {
-        update(msg.pools == undefined ? ALL : msg.pools);
-    }
-    if (msg.command === command.clear) {
-        clearAll();
-        update(msg.pools == undefined ? ALL : msg.pools);
-    }
-});
+var previousPools;
 
-port.onDisconnect.addListener((message) => {
-    console.log("disconnecting");
-    if (message.error) {
-      console.log(`Disconnected due to an error: ${message.error}`);
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if (request.message === "wenrug") {
+            if (previousPools != request.pools) clearAll();
+            previousPools = request.pools == undefined ? ALL : request.pools;
+            update(previousPools);
+        }
     }
-});
+);
